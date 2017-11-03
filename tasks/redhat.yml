@@ -9,7 +9,7 @@
 
 - name: install docker
   yum:
-    name: "docker-ce{{ ecs_agent_docker_version|ternary('-' + ecs_agent_docker_version, '') }}"
+    name: "docker-ce{{ docker_version|ternary('-' + docker_version, '') }}"
     state: installed
 
 - name: install docker storage dependencies
