@@ -1,21 +1,4 @@
-# http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-install.html
-- name: enable docker repo
-  yum_repository:
-    baseurl: https://download.docker.com/linux/centos/7/x86_64/stable
-    name: docker
-    gpgkey: https://download.docker.com/linux/centos/gpg
-    gpgcheck: yes
-    description: Docker repository
-
-- name: install docker
-  yum:
-    name: "docker-ce{{ ecs_agent_docker_version|ternary('-' + ecs_agent_docker_version, '') }}"
-    state: installed
-
-- name: install docker storage dependencies
-  yum:
-    name: lvm2
-    state: installed
+- include_tasks: "{{ ansible_os_family|lower }}.yml"
 
 - name: make docker configuration directory
   file:
