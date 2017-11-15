@@ -15,6 +15,11 @@
     state: present
     update_cache: yes
 
+- name: install thin provisioning tools
+  apt:
+    name: thin-provisioning-tools
+    state: present
+
 - name: ensure docker is started and enabled
   service:
     name: docker
