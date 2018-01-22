@@ -1,0 +1,23 @@
+- name: Create a new IAM role
+  iam_role:
+    region: "{{ region }}"
+    profile: "{{ aws_account_name }}"
+    name: "{{ item.name }}"
+    path: '/'
+    state: present
+    assume_role_policy_document: "{{ lookup('template', item.trust_policy, convert_data=False) | from_json }}"
+    managed_policy: "{{ item.managed_policies|default([]) }}"
+  with_items: "{{ dynamic_iam_roles }}"
+
+- name: Create and attach policy to role
+  iam_policy:
+    region: "{{ region }}"
+    profile: "{{ aws_account_name }}"
+    iam_type: role
+    iam_name: "{{ item.name }}"
+    policy_name: "{{ item.policy_name | default(item.name) }}"
+    policy_json: "{{ lookup('template', item.policy, convert_data=False) | from_json }}"
+    state: present
+  with_items: "{{ dynamic_iam_roles }}"
+  when: item.policy | default()
+
