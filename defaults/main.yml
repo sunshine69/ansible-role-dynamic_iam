@@ -1,3 +1,5 @@
 docker_version: ''  # defaults to latest
 docker_storage_setup_devs: []
 docker_storage_setup_vg_name: 'docker'
+docker_storage_driver: devicemapper
+docker_directlvm_device: /dev/xvdcz

@@ -1,7 +1,8 @@
+{% if docker_storage_driver == "devicemapper" %}
 {
   "storage-driver": "devicemapper",
   "storage-opts": [
-    "dm.directlvm_device=/dev/xvdcz",
+    "dm.directlvm_device={{ docker_directlvm_device }}",
     "dm.thinp_percent=95",
     "dm.thinp_metapercent=1",
     "dm.thinp_autoextend_threshold=80",
@@ -9,3 +10,4 @@
     "dm.directlvm_device_force=false"
   ]
 }
+{% endif %}
