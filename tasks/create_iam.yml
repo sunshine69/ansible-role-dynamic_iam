@@ -8,6 +8,13 @@
     assume_role_policy_document: "{{ lookup('template', item.trust_policy, convert_data=False) | from_json }}"
     managed_policy: "{{ item.managed_policies|default([]) }}"
   with_items: "{{ dynamic_iam_roles|default([]) }}"
+  register: iam_role
+
+# See this http://stackoverflow.com/questions/36419442/the-role-defined-for-the-function-cannot-be-assumed-by-lambda
+# Without this I hit the error The role defined for the function cannot be assumed by Lambda
+- name: Sleeping for 10 sec for the role to be available.
+  pause: seconds=10
+  when: iam_role.changed
 
 - name: Create and attach policy to role
   iam_policy:
@@ -20,4 +27,8 @@
     state: present
   with_items: "{{ dynamic_iam_roles|default([]) }}"
   when: item.policy | default()
+  register: iam_policy
 
+- name: Sleeping for 10 sec for the role to be available.
+  pause: seconds=10
+  when: iam_policy.changed
