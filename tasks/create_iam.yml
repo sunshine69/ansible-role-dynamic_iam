@@ -5,7 +5,7 @@
     name: "{{ item.name }}"
     path: '/'
     state: present
-    assume_role_policy_document: "{{ lookup('template', item.trust_policy, convert_data=False) | from_json }}"
+    assume_role_policy_document: "{{ item.trust_policy }}"
     managed_policy: "{{ item.managed_policies|default([]) }}"
   with_items: "{{ dynamic_iam_roles|default([]) }}"
   register: iam_role
@@ -23,7 +23,7 @@
     iam_type: role
     iam_name: "{{ item.name }}"
     policy_name: "{{ item.policy_name | default(item.name) }}"
-    policy_json: "{{ lookup('template', item.policy, convert_data=False) | from_json }}"
+    policy_json: "{{ item.policy }}"
     state: present
   with_items: "{{ dynamic_iam_roles|default([]) }}"
   when: item.policy | default()
