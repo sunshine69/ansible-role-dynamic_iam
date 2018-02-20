@@ -7,8 +7,8 @@ of configuration
 
 * `dynamic_iam_roles` - a list of dicts. Each dict needs the following keys:
       - `name`: name of the role
-      - `policy`: path to the template to use for the policy json document
-      - `trust_policy`: path to the template to use for the trust policy json document
+      - `policy`: json document for access policy
+      - `trust_policy`: json document for trust policy
 
 ## Example
 
@@ -16,8 +16,8 @@ of configuration
 vars:
   dynamic_iam_roles:
     - name: new-iam-role
-      policy: "{{ inventory_dir }}/../variable_files/iam_policies/new-iam-role.json"
-      trust_policy: "{{ inventory_dir }}/../variable_files/iam_policies/new-iam-role-trust-policy.json"
+      policy: "{{ lookup('template', 'variable_files/iam_policies/new-iam-role-policy.json', convert_data=False) | from_json }}"
+      trust_policy: "{{ lookup('template', 'variable_files/iam_policies/new-iam-role-trust-policy.json', convert_data=False) | from_json }}"
 
 roles:
 - dynamic_iam
