@@ -10,4 +10,11 @@
     "dm.directlvm_device_force=false"
   ]
 }
+{% elif docker_storage_driver == "overlay2" %}
+
+{
+  "storage-driver": "overlay2",
+  "graph": "{{ docker_data_dir }}"
+}
+
 {% endif %}

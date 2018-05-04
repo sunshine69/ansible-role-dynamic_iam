@@ -3,3 +3,4 @@ docker_storage_setup_devs: []
 docker_storage_setup_vg_name: 'docker'
 docker_storage_driver: devicemapper
 docker_directlvm_device: /dev/xvdcz
+docker_data_dir: /var/lib/docker
