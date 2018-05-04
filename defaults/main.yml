@@ -2,6 +2,5 @@ docker_version: ''  # defaults to latest
 docker_storage_setup_devs: []
 docker_storage_setup_vg_name: 'docker'
 docker_storage_driver: overlay2
-docker_data_device: /dev/xvdcz
 docker_data_dir: /var/lib/docker
-docker_directlvm_device: "{{ docker_data_device }}"
+docker_directlvm_device: "/dev/xvdcz"
