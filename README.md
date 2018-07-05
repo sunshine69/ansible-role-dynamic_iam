@@ -13,9 +13,9 @@ Installs docker according to first half of
   If not provided then it will be in the root file system.
 * `docker_data_dir` - path to docker data directory, default to /var/lib/docker
 * `docker_data_file_system` - The file system to be format if `docker_data_device` is provided. Default: ext4
-* `docker_storage_driver` - The docker storage driver to be used. Default is 'devicemapper'. Note that it still has IO bottle neck if you use that driver.
-* `docker_clean_image_time` - Optional, Default: 'daily'. Possible value:
-  Supported by ansible corn module param 'special_time'.
+* `docker_storage_driver` - The docker storage driver to be used. Default is 'devicemapper'. Note that it still has IO bot   tle neck if you use that driver.
+* `docker_clean_image_time` - Optional, No Default value - It will skip deploy the cleanup task if no value supplied
+  Possible value: Supported by ansible corn module param 'special_time'.
 
   Setup a cron task to remove the images daily to clean up local space. To disable set it to string 'disabled'
 
