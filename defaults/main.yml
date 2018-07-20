@@ -4,3 +4,7 @@ docker_storage_setup_vg_name: 'docker'
 docker_storage_driver: overlay2
 docker_data_dir: /var/lib/docker
 docker_directlvm_device: "/dev/xvdcz"
+
+ubuntu_docker_repo_key:
+  xenial: 0EBFCD88
+  bionic: 7EA0A9C3F273FCD8
