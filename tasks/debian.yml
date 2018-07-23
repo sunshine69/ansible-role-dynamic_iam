@@ -1,13 +1,13 @@
-- name: install docker repo
-  apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable"
-    state: present
-
 - name: Install apt key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
-    id: 0EBFCD88
+    id: "{{ ubuntu_docker_repo_key[ansible_distribution_release] }}"
+
+- name: install docker repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable"
+    state: present
 
 - name: install docker
   apt:
