@@ -45,7 +45,9 @@
 
 - name: Cleaning up images daily to maintain space
   cron:
+    name: cleanup_docker_images
     job: "docker images | awk '{print $3}'| while read img_id; do docker rmi -f $img_id; done"
-    special_time: "{{ docker_clean_image_time|default('daily') }}"
+    minute: "{{ docker_clean_image_at_min|default(0) }}"
+    hour: "{{ docker_clean_image_at_hour|default(0) }}"
     state: present
-  when: docker_clean_image_time is defined and (docker_clean_image_time != 'disabled' or docker_clean_image_time != 'never')
+  when: docker_clean_image_time|default(True)
