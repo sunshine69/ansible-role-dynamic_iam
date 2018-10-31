@@ -43,10 +43,18 @@
     value: 1
     reload: yes
 
+- name: Deploy the cleaning up docker images script as cron does not like direct command
+  copy:
+    content: |
+      #!/bin/sh
+      docker images | awk '{print $3}'| while read img_id; do docker rmi -f $img_id; done
+    dest: "/usr/local/bin/cleaning-docker-images.sh"
+    mode: "u+rwx"
+
 - name: Cleaning up images daily to maintain space
   cron:
     name: cleanup_docker_images
-    job: "docker images | awk '{print $3}'| while read img_id; do docker rmi -f $img_id; done"
+    job: "/usr/local/bin/cleaning-docker-images.sh"
     minute: "{{ docker_clean_image_at_min|default(0) }}"
     hour: "{{ docker_clean_image_at_hour|default(0) }}"
     state: present
