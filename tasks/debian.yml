@@ -11,7 +11,9 @@
 
 - name: install docker
   apt:
-    name: "docker-ce{{ docker_version|ternary('=' ~ docker_version, '') }}"
+    name:
+      - "docker-ce{{ docker_version|ternary('=' ~ docker_version, '') }}"
+      - "docker-ce-cli{{ docker_version|ternary('=' ~ docker_version, '') }}"
     state: present
     update_cache: yes
 
@@ -25,4 +27,3 @@
     name: docker
     state: started
     enabled: yes
-
