@@ -21,9 +21,3 @@
   apt:
     name: thin-provisioning-tools
     state: present
-
-- name: ensure docker is started and enabled
-  service:
-    name: docker
-    state: started
-    enabled: yes
