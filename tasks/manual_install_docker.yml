@@ -7,6 +7,18 @@
     url: "{{ docker_download_url }}"
     dest: "/tmp/{{ docker_archive_name }}"
 
+- name: Cleanup old installation if docker_manual_update is set
+  block:
+  - service: name=docker state=stop
+  - file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - '/usr/bin/dockerd'
+      - '/usr/bin/docker'
+      - '/bin/docker'
+  when: docker_manual_update is defined and docker_manual_update|bool
+
 - name: Extract archive
   shell: |
     tar xf {{ docker_archive_name }}
@@ -15,6 +27,7 @@
     ln -sf /usr/bin/docker /bin/docker
   args:
     chdir: /tmp
+    creates: /usr/bin/dockerd
 
 - name: Deploy the systemd docker service file
   copy:
