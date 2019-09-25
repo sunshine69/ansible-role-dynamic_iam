@@ -1,4 +1,8 @@
 - include_tasks: "{{ ansible_os_family|lower }}.yml"
+  when: docker_download_url is not defined or docker_download_url == '' or docker_download_url == None
+
+- include_task: manual_install_docker.yml
+  when: docker_download_url|default('') != ''
 
 - name: make docker configuration directory
   file:

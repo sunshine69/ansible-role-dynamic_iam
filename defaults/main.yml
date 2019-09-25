@@ -8,3 +8,6 @@ docker_directlvm_device: "/dev/xvdcz"
 ubuntu_docker_repo_key:
   xenial: 0EBFCD88
   bionic: 7EA0A9C3F273FCD8
+
+# Binary installation url
+#docker_download_url:

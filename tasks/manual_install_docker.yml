@@ -1,0 +1,26 @@
+- name: setfact archive name
+  set_fact:
+    docker_archive_name: "{{ docker_download_url|basename }}"
+
+- name: Download the docker binnary archive
+  get_url:
+    url: "{{ docker_download_url }}"
+    dest: "/tmp/{{ docker_archive_name }}"
+
+- name: Extract archive
+  shell: |
+    tar xf {{ docker_archive_name }}
+    cd docker
+    mv * /usr/bin/
+    ln -sf /usr/bin/docker /bin/docker
+  args:
+    chdir: /tmp
+
+- name: Deploy the systemd docker service file
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item|basename }}"
+  with_items:
+    - "{{ ansible_os_family }}/docker.service"
+    - "docker.socket"
+  notify: reload systemctl
